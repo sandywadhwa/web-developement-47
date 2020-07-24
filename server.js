@@ -5,6 +5,9 @@ var express = require('express');
 // 2. Create Application
 var app = express();
 
+// Tell express where css and js files are there
+app.use(express.static(__dirname+'/frontend'));
+
 // 3.  Define Functiosn to run when someone accesses our site
 app.get('/', function(req, res){
     res.sendFile(__dirname+'/frontend/html/index.html');

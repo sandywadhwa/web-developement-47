@@ -1,0 +1,14 @@
+
+.redButton {
+    background-color: red;
+    font-size: 12;
+    color: white;
+    border: 10px solid yellow;
+    font-family: Georgia, 'Times New Roman', Times, serif;
+}
+
+.blueButton {
+    background-color: blue;
+    font-size: 12;
+    color: white;
+}

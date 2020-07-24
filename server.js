@@ -13,6 +13,12 @@ app.get('/', function(req, res){
     res.sendFile(__dirname+'/frontend/html/index.html');
 })
 
+
+app.get('/text-tags', function(req, res){
+    res.sendFile(__dirname+'/frontend/html/texttags.html');
+})
+
+
 // 4. Run Application on a port ==> 65xxx (65K ports) Mostly we use beyone 3000
 var port= process.env.PORT  || 3000;
 

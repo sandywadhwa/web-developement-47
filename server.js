@@ -18,9 +18,11 @@ app.use('/', function(req, res, next){
 })
 
 // 3.  Define Functiosn to run when someone accesses our site
-app.get('/', function(req, res){
+var indexHandler = function(req, res){
     res.sendFile(__dirname+'/frontend/html/index.html');
-})
+};
+
+app.get('/', indexHandler);
 
 app.get('/new-index', function(req, res){
     res.sendFile(__dirname+'/frontend/html/new-index.html');
@@ -41,6 +43,5 @@ app.get('/clock', function(req, res){
 var port= process.env.PORT  || 3000;
 
 // Once site is up, function() will be called automatically
-app.listen(port, function(){
-    console.log("Site Running on http://localhost:"+port);
-});
+//app.listen(port, () => console.log("Site Running on http://localhost:"+port));
+app.listen(port, () => console.log(`Site Running on http://localhost:${port}`));

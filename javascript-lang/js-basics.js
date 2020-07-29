@@ -88,3 +88,8 @@ if(x == "2")
 
 if(x === "2")
     console.log("This doesn't work");
+
+
+x = 100;
+
+console.log(`Value of x is ${x}`);

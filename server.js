@@ -38,6 +38,31 @@ app.get('/clock', function(req, res){
     res.sendFile(__dirname+'/frontend/html/clock.html');
 })
 
+var userObjects = [{
+        'name' : 'Vekatesh',
+        'email' : 'venkatesh@gmail.com'
+    },
+    {
+        'name' : 'Kaushik',
+        'email' : 'kaushik@gmail.com'
+    },
+    {
+        'name' : 'Pranay',
+        'email' : 'prana@gmail.com'
+    }];
+
+
+app.get('/ajax', function(req, res){
+    res.sendFile(__dirname+'/frontend/html/ajax.html');
+})
+
+app.get('/api/students', function(req, res){
+    /* Connect to DB */
+    /* Get Data */
+    /* Convert data to JSON */
+    
+    res.json(userObjects);
+})
 
 // 4. Run Application on a port ==> 65xxx (65K ports) Mostly we use beyone 3000
 var port= process.env.PORT  || 3000;

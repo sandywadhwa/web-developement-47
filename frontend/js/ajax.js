@@ -5,21 +5,38 @@ Make Call to API Server to get JSON Data
 Create A Table and Add to Page
 */
 
-var httpReq = new XMLHttpRequest();
+document.getElementById('btnGetData').addEventListener('click', getServerData);
+//document.getElementById('btnGetData').onclick = getServerData;
 
-// this will be called when ReadyState Changes
-httpReq.onreadystatechange = function(){
-    console.log("READY STATE:" + this.readyState);
-    if(this.readyState==4){
-        var jsonData = this.responseText;
-        createAndAddTableToPage(this.responseText);
-        console.log(jsonData);
-        console.log(JSON.stringify(jsonData));
+function getServerData(){
+    var httpReq = new XMLHttpRequest();
+
+    // this will be called when ReadyState Changes
+    httpReq.onreadystatechange = function(){
+        console.log("READY STATE:" + this.readyState);
+        if(this.readyState==4){
+            console.log(this.status);
+            console.log(this.statusText);
+            if(this.status==200){
+                var jsonData = this.responseText;
+                createAndAddTableToPage(this.responseText);
+                console.log(jsonData);
+                console.log(JSON.stringify(jsonData));
+            }
+        }
     }
+    
+    httpReq.open('GET', '/api/students', true);
+    httpReq.send();
+
+
+    /* SYNCHRONOUS REQUEST
+    httpReq.open('GET', '/api/students', false);
+    httpReq.send();
+    console.log(httpReq.responseText);
+    */
 }
 
-httpReq.open('GET', '/api/students');
-httpReq.send();
 
 function createAndAddTableToPage(jsonArray){
     /* Create A Table*/
@@ -37,5 +54,9 @@ function createAndAddTableToPage(jsonArray){
     tableData += "</table>";
 
     /* Add Table to HTML Page - DOM Manipulation*/
-    document.getElementById('table-data').innerHTML = tableData;
+    var divEle = document.getElementById('table-data');
+    divEle.innerHTML = tableData;
+    //divEle.width = '200px';
+    //divEle.setAttribute('width', 200);
+    //divEle.style.backgroundColor = 'green';
 }

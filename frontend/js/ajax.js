@@ -37,6 +37,8 @@ function getServerData(){
     */
 }
 
+// OWN === sort
+// BUILT-IN === sort
 
 function createAndAddTableToPage(jsonArray){
     /* Create A Table*/

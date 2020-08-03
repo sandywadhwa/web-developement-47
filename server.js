@@ -56,11 +56,17 @@ app.get('/ajax', function(req, res){
     res.sendFile(__dirname+'/frontend/html/ajax.html');
 })
 
+
+app.get('/jquery', function(req, res){
+    res.sendFile(__dirname+'/frontend/html/jqueryown.html');
+})
+
+
 app.get('/api/students', function(req, res){
     /* Connect to DB */
     /* Get Data */
     /* Convert data to JSON */
-    
+
     res.json(userObjects);
 })
 

@@ -7,6 +7,7 @@ var app = express();
 
 // Tell express where css and js files are there
 app.use(express.static(__dirname+'/frontend'));
+app.use(express.json()); // This will add query, params and body to req
 
 /* MIDDLEWARE */
 app.use('/', function(req, res, next){
@@ -22,6 +23,19 @@ var indexHandler = function(req, res){
     res.sendFile(__dirname+'/frontend/html/index.html');
 };
 
+app.use('*', function(req, res, next){
+    console.log("REQUEST CAME, PASSING TO NEXT1 HANDLER");
+    if(false){
+        res.redirect('/');
+        //return res.send('hello');
+    }
+    next();
+}, function(req, res, next){
+    console.log("REQUEST CAME, PASSING TO NEXT2 HANDLER");
+    next();
+})
+
+
 app.get('/', indexHandler);
 
 app.get('/new-index', function(req, res){
@@ -36,6 +50,14 @@ app.get('/text-tags', function(req, res){
 
 app.get('/clock', function(req, res){
     res.sendFile(__dirname+'/frontend/html/clock.html');
+})
+
+
+app.get('/dashboard', function(req, res){
+
+})
+app.get('/profile', function(req, res){
+
 })
 
 var userObjects = [{
@@ -69,6 +91,41 @@ app.get('/api/students', function(req, res){
 
     res.json(userObjects);
 })
+
+
+/* Defining Routes for USER */
+var users = [ {id: 1, name: 'Being Zero'}];
+app.get('/api/users', function(req, res){
+    res.json(users);
+})
+
+app.post('/api/users', function(req, res){
+    var userObj = req.body;
+
+    res.json({'error':'not implemeneted'});
+})
+
+app.get('/api/users/:userId', function(req, res){
+    console.log(JSON.stringify(req.params));
+    //console.log(req.params.userId);
+    var user = {};
+    for(var i=0;i<users.length;i++){
+        if(users[i].id == req.params.userId){
+            user = users[i];
+        }
+    }
+    // Search a user with given id and return 
+    res.json(user);
+})
+
+app.put('/api/users/:userId', function(req, res){
+    res.json({'error':'not implemeneted'});
+});
+
+app.delete('/api/users/:userId', function(req, res){
+    res.json({'error':'not implemeneted'});
+});
+
 
 // 4. Run Application on a port ==> 65xxx (65K ports) Mostly we use beyone 3000
 var port= process.env.PORT  || 3000;

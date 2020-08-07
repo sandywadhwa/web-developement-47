@@ -1,3 +1,6 @@
+# Settings of VS Code
+.vscode/
+
 # Logs
 logs
 .DS_Store

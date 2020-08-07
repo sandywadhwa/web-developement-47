@@ -2,6 +2,10 @@ var express = require('express');
 var allRoutes = require('./allroutes');
 var app = express();
 
+/* Connect to DB*/
+var dbconnect = require('./dbconnect');
+dbconnect.connect();
+
 // Middleware that'll get body from request
 // And add it to req.body
 app.use(express.json());

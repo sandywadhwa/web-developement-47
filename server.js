@@ -9,6 +9,7 @@ dbconnect.connect();
 // Middleware that'll get body from request
 // And add it to req.body
 app.use(express.json());
+// app.use(express.urlencoded({extended: true}));
 
 /*
     Express Application Object

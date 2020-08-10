@@ -2,6 +2,7 @@ var mongoose = require('mongoose');
 
 module.exports.connect = function()
 {
+    // srv+mongodb://
     var connectionString = process.env.MONGODB_CONNECTION_STRING || 'mongodb://localhost:27017/userdb';
     var optionsJSON = {   useNewUrlParser: true, useUnifiedTopology: true };
     mongoose.connect(connectionString, optionsJSON);
@@ -19,4 +20,8 @@ module.exports.connect = function()
     connectionObj.on('error', function(err){
         console.log("ERROR: "+err);
     })
+}
+
+module.exports.disconnect = function(){
+    mongoose.disconnect();   
 }

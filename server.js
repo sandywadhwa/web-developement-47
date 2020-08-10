@@ -3,7 +3,7 @@ var allRoutes = require('./allroutes');
 var app = express();
 
 /* Connect to DB*/
-var dbconnect = require('./dbconnect');
+var dbconnect = require('./backend/db/dbconnect');
 dbconnect.connect();
 
 // Middleware that'll get body from request
@@ -29,8 +29,9 @@ app.use(express.json());
         })
 */
 
+const configLib = require('./backend/lib/configLib');
 app.set('company-name', 'Being Zero');
-app.set('port', process.env.PORT || 3000);
+app.set('port', configLib.port);
 
 app.use('/', function(req, res, next){
     console.log('User Request for Home Page '+new Date());
@@ -55,7 +56,7 @@ app.get('/users/:id/addresses/:addrid', function(req, res){
 })
 
 
-app.use('/users', allRoutes);
+app.use('/api/users', allRoutes);
 
 
 var port = app.get('port');

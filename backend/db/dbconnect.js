@@ -1,12 +1,11 @@
-var mongoose = require('mongoose');
-
+const mongoose = require('mongoose');
+const configLib = require('../lib/configLib');
 module.exports = 
 {
     connect : function(){
         // srv+mongodb://
-        var connectionString = process.env.MONGODB_CONNECTION_STRING || 'mongodb://localhost:27017/userdb';
-        var optionsJSON = {   useNewUrlParser: true, useUnifiedTopology: true };
-        mongoose.connect(connectionString, optionsJSON);
+        var optionsJSON = {   useCreateIndex: true, useNewUrlParser: true, useUnifiedTopology: true };
+        mongoose.connect(configLib.mongodb_connection_string, optionsJSON);
 
         var connectionObj = mongoose.connection;
 

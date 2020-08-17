@@ -1,4 +1,5 @@
 var express = require('express');
+var path = require('path');
 var allRoutes = require('./allroutes');
 var app = express();
 
@@ -29,11 +30,14 @@ app.use(express.json());
         })
 */
 
+
+
 const configLib = require('./backend/lib/configLib');
 app.set('company-name', 'Being Zero');
 app.set('port', configLib.port);
 
 app.use('/', function(req, res, next){
+    res.sendFile(path.join(__dirname, '/frontend/html/index.html'));
     console.log('User Request for Home Page '+new Date());
     next();
 })

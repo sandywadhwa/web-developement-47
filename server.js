@@ -2,6 +2,7 @@ var express = require('express');
 var path = require('path');
 var allRoutes = require('./allroutes');
 var app = express();
+var fs = require('fs');
 
 /* Connect to DB*/
 var dbconnect = require('./backend/db/dbconnect');
@@ -36,19 +37,20 @@ const configLib = require('./backend/lib/configLib');
 app.set('company-name', 'Being Zero');
 app.set('port', configLib.port);
 
-app.use('/', function(req, res, next){
-    res.sendFile(path.join(__dirname, '/frontend/html/index.html'));
-    console.log('User Request for Home Page '+new Date());
-    next();
-})
+// app.use('/', function(req, res, next){
+//     res.sendFile(path.join(__dirname, '/frontend/html/index.html'));
+//     console.log('User Request for Home Page '+new Date());
+//     next();
+// })
 
 /*
     req
 */
 app.get('/', function(req, res){
-    console.log("HEADERS: " + JSON.stringify(req.headers));
-    console.log("QUERY: " + JSON.stringify(req.query));
-    res.send('This is my first response');
+    res.redirect('/index');
+    // console.log("HEADERS: " + JSON.stringify(req.headers));
+    // console.log("QUERY: " + JSON.stringify(req.query));
+    // res.send('This is my first response');
 })
 
 console.log('COMPANY: '+app.get('company-name'));
@@ -62,6 +64,16 @@ app.get('/users/:id/addresses/:addrid', function(req, res){
 
 app.use('/api/users', allRoutes);
 
+// DEFINE ONE ROUT FOR ALL HTML PAGES
+app.get('/:pagename', (req, res)=>{
+    var pn = req.params.pagename;
+    console.log("PAGENAME: "+pn);
+    var pageFilePath = path.join(__dirname, 'frontend', 'html', pn+".html");
+    if(!fs.existsSync(pageFilePath))
+        res.sendFile(path.join(__dirname, 'frontend', 'html', "404.html"));
+    else
+        res.sendFile(pageFilePath);
+});
 
 var port = app.get('port');
 app.listen(port,  function(){

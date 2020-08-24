@@ -3,6 +3,7 @@ var path = require('path');
 var allRoutes = require('./allroutes');
 var app = express();
 var fs = require('fs');
+const authLib = require('./backend/lib/authLib');
 
 /* Connect to DB*/
 var dbconnect = require('./backend/db/dbconnect');
@@ -11,6 +12,7 @@ dbconnect.connect();
 // Middleware that'll get body from request
 // And add it to req.body
 app.use(express.json());
+app.use(express.static(path.join(__dirname, 'frontend')));
 // app.use(express.urlencoded({extended: true}));
 
 /*
@@ -61,8 +63,24 @@ app.get('/users/:id/addresses/:addrid', function(req, res){
     console.log("PARAMS: "+ JSON.stringify(req.params));
 })
 
+app.post('/api/auth/register', function(req, res){
+    console.log("BODY: "+ JSON.stringify(req.body));
+    authLib.registerUser(req.body, function(err, userObj){
+        res.json({err: err, user: userObj})
+    })
+})
 
-app.use('/api/users', allRoutes);
+function isAuthenticated(req, res, next){
+    // if valid
+        next();
+    // else
+        res.redirect('/login');
+}
+
+
+app.use('/api/users', isAuthenticated , allRoutes);
+
+
 
 // DEFINE ONE ROUT FOR ALL HTML PAGES
 app.get('/:pagename', (req, res)=>{

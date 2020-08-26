@@ -10,7 +10,9 @@ $(document).ready(function(){
     if(lsUser){
         console.log("FOUND USER IN LS");
         var lUserObj = JSON.parse(lsUser);
-        $('#username').text(lUserObj.username);
+        if(lUserObj && lUserObj.username)
+            $('#username').text(lUserObj.username);
+        //window.location = '/pages/profile';
     }
     else{
         console.log("NOT FOUND USER IN LS - MAKING SERVER CALL");
@@ -23,9 +25,12 @@ $(document).ready(function(){
             method: 'GET'
         })
         .then(function(result){
-            console.log("RESULT: "+JSON.stringify(result));
-            window.localStorage.setItem('user', JSON.stringify(result));
-            $('#username').text(result.username);
+            if(result){
+                console.log("RESULT: "+JSON.stringify(result));
+                window.localStorage.setItem('user', JSON.stringify(result));
+                if(result.username)
+                    $('#username').text(result.username);
+            }
         })
     }
 
@@ -33,8 +38,16 @@ $(document).ready(function(){
         console.log("LOGOUT CALLED");
         localStorage.clear();
         $('#username').text('');
+        window.location = '/pages/login';
         // Make a Server Call also to logout
         // So that Server Session is also destroyed
+        $.ajax({
+            url: '/api/logout',
+            method: 'POST'
+        })
+        .then(function(result){
+            window.location.redirectUrl = result.redirectUrl;
+        })
     })
 
 })

@@ -29,7 +29,11 @@ app.use(express.static(path.join(__dirname, 'public')));
 
 app.use(session({
     secret: 'this is a secret',
+    resave: true,
     saveUninitialized: false,
+    cookie: {
+        maxAge: 1000  /*  second Timeout*/
+    },
     store: new MongoStore({ mongooseConnection: mongoose.connection })
 }));
 
